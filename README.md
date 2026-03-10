@@ -1,19 +1,18 @@
 class Solution:
-    def getSecondLargest(self, arr):
-        # Initialize both variables to -1 as per problem requirements
-        largest = -1
-        second_largest = -1
+    def maxSubarraySum(self, arr):
+        # Initialize max_so_far with the first element to handle 
+        # cases where all numbers are negative.
+        max_so_far = arr[0]
+        current_max = arr[0]
         
-        for num in arr:
-            # Case 1: Found a new maximum
-            if num > largest:
-                # The old largest is demoted to second largest
-                second_largest = largest
-                largest = num
+        # Start from the second element
+        for i in range(1, len(arr)):
+            # Decision: Is it better to start a new subarray at arr[i], 
+            # or extend the existing one?
+            current_max = max(arr[i], current_max + arr[i])
             
-            # Case 2: Found a number smaller than the max but larger than the current second
-            # We check (num != largest) to handle duplicate values of the maximum
-            elif num > second_largest and num != largest:
-                second_largest = num
+            # Update the global maximum if the current subarray sum is better
+            if current_max > max_so_far:
+                max_so_far = current_max
                 
-        return second_largest
+        return max_so_far
